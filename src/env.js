@@ -66,7 +66,6 @@ export const env = createEnv({
     R2_SECRET_KEY: process.env.R2_SECRET_KEY,
     R2_BUCKET: process.env.R2_BUCKET,
     R2_URL: process.env.R2_URL,
-    FROM_EMAIL: process.env.FROM_EMAIL,
     FEEDBACK_EMAIL: process.env.FEEDBACK_EMAIL,
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
     NEXT_PUBLIC_R2_PUBLIC_URL: process.env.NEXT_PUBLIC_R2_PUBLIC_URL,
@@ -74,8 +73,15 @@ export const env = createEnv({
     WEB_PUSH_PRIVATE_KEY: process.env.WEB_PUSH_PRIVATE_KEY,
     NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY: process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
     NEXT_PUBLIC_BEAM_ID: process.env.NEXT_PUBLIC_BEAM_ID,
+    UNSEND_FROM_EMAIL: process.env.UNSEND_FROM_EMAIL,
     UNSEND_API_KEY: process.env.UNSEND_API_KEY,
     UNSEND_URL: process.env.UNSEND_URL,
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_SECURE: process.env.SMTP_SECURE,
+    SMTP_FROM_EMAIL: process.env.SMTP_FROM_EMAIL,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASSWORD: process.env.SMTP_PASSWORD
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

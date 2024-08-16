@@ -3,7 +3,6 @@ import { Unsend } from 'unsend';
 import { Resend } from 'resend';
 import { env } from '~/env';
 
-const unsend = new Unsend(env.UNSEND_API_KEY);
 
 export async function sendSignUpEmail(email: string, token: string, url: string) {
   const { host } = new URL(url);
@@ -48,9 +47,11 @@ export async function sendFeedbackEmail(feedback: string, user: User) {
 
 async function sendMail(email: string, subject: string, text: string, html: string) {
   try {
-    if (env.UNSEND_API_KEY) {
+    if (env.EMAIL_METHOD === "smtp" && env.UNSEND_API_KEY && env.UNSEND_FROM_EMAIL) {
+      const unsend = new Unsend(env.UNSEND_API_KEY);
+
       const response = await unsend.emails.send({
-        from: 'hello@auth.splitpro.app',
+        from: env.UNSEND_FROM_EMAIL,
         to: email,
         subject,
         text,
@@ -66,5 +67,29 @@ async function sendMail(email: string, subject: string, text: string, html: stri
     }
   } catch (error) {
     console.log('Error sending email using unsend, so fallback to resend', error);
+  }
+
+  try {
+    if (env.EMAIL_METHOD === "smtp" && env.SMTP_HOST && env.SMTP_PORT && env.SMTP_SECURE && env.SMTP_FROM_EMAIL && env.SMTP_USER && env.SMTP_PASSWORD) {
+      const transporter = nodemailer.createTransport({
+        host: env.SMTP_HOST,
+        port: env.SMTP_PORT,
+        secure: env.SMTP_SECURE,
+        auth: {
+          user: env.SMTP_USER,
+          pass: env.SMTP_PASSWORD,
+        },
+      });
+
+      const response = await transporter.sendMail({
+        from: env.SMTP_FROM_EMAIL,
+        to: email,
+        subject,
+        text,
+        html,
+      });
+    }
+  } catch (error) {
+    console.log('Error sending email using smtp, so fallback to resend', error);
   }
 }
