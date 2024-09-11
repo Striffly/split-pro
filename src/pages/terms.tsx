@@ -2,8 +2,11 @@ import { type NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { env } from '~/env';
+import { usePublicEnv } from '~/publicEnvProvider';
 
 const Terms: NextPage = () => {
+  const publicEnv = usePublicEnv();
+
   return (
     <>
       <div>
@@ -64,8 +67,8 @@ const Terms: NextPage = () => {
           <p className="mt-12 text-xl font-semibold">8. Contact</p>
           <p className="mt-1 text-lg text-gray-300">
             If you have any questions or concerns regarding these Terms, please contact us at{' '}
-            <a className="underline" href={'mailto:' + env.NEXT_PUBLIC_FEEDBACK_EMAIL}>
-              {env.NEXT_PUBLIC_FEEDBACK_EMAIL ?? ''}
+            <a className="underline" href={'mailto:' + publicEnv.NEXT_PUBLIC_FEEDBACK_EMAIL}>
+              {publicEnv.NEXT_PUBLIC_FEEDBACK_EMAIL ?? ''}
             </a>
             .
           </p>

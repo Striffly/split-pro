@@ -11,8 +11,11 @@ import Image from 'next/image';
 import { SendIcon } from 'lucide-react';
 import { env } from '~/env';
 import React from 'react';
+import { usePublicEnv } from '~/publicEnvProvider';
 
 export const SelectUserOrGroup: React.FC = () => {
+  const publicEnv = usePublicEnv();
+
   const nameOrEmail = useAddExpenseStore((s) => s.nameOrEmail);
   const participants = useAddExpenseStore((s) => s.participants);
   const group = useAddExpenseStore((s) => s.group);
@@ -78,7 +81,7 @@ export const SelectUserOrGroup: React.FC = () => {
     <div className="mt-1 ">
       <div>
         <div>
-          {env.NEXT_PUBLIC_ENABLE_SENDING_INVITES ? (
+          {publicEnv.NEXT_PUBLIC_ENABLE_SENDING_INVITES ? (
             <div className="mt-1 text-orange-600">
               {isEmail.success
                 ? "Warning: Don't use send invite if it's invalid email. use add to Split Pro instead. Your account will be blocked if this feature is misused"
@@ -89,7 +92,7 @@ export const SelectUserOrGroup: React.FC = () => {
           )}
         </div>
         <div className="flex justify-center gap-4">
-          {env.NEXT_PUBLIC_ENABLE_SENDING_INVITES && (
+          {publicEnv.NEXT_PUBLIC_ENABLE_SENDING_INVITES && (
             <Button
               className="mt-4 w-full text-cyan-500 hover:text-cyan-500"
               variant="outline"
